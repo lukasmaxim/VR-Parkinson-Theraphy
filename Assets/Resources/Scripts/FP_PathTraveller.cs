@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathTraveller : MonoBehaviour
+public class FP_PathTraveller : MonoBehaviour
 {
 
     public Transform[] path;
@@ -11,7 +11,7 @@ public class PathTraveller : MonoBehaviour
     int currentNode;
     float timer;
 
-    bool shouldFollow = true;
+    bool shouldFollow;
 
     public void FollowPath()
     {
