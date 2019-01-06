@@ -8,6 +8,8 @@ public class FP_TravelManager : NetworkBehaviour {
 
     [SerializeField]
     FP_PathTraveller pathTraveller;
+    [SerializeField]
+    FP_ExerciseStateManager exerciseStateManager;
 
     // Indicates leap gesture
     [SyncVar]
@@ -28,7 +30,7 @@ public class FP_TravelManager : NetworkBehaviour {
     public override void OnStartServer()
     {
         currentPlatform = 1;
-        //viveFlightGesture = true;
+        viveFlightGesture = true;
     }
 
     // Update is called once per frame
@@ -39,21 +41,38 @@ public class FP_TravelManager : NetworkBehaviour {
         {
             print("Travelling from " + currentPlatform + " to " + destinationPlatform);
             path = GameObject.FindGameObjectWithTag(currentPlatform + "-1").transform.Cast<Transform>().ToArray();
-            pathTraveller.FollowPath(path, delegate () { if (isServer) { currentPlatform = 1; } });
+            pathTraveller.FollowPath(path, delegate () {
+                if (isServer) {
+                    currentPlatform = 1;
+                }
+                exerciseStateManager.activateExercise(1);
+            });
         }
         // Travel to 2
         if (currentPlatform != 2 && destinationPlatform == 2 && leapFlightGesture && viveFlightGesture)
         {
             print("Travelling from " + currentPlatform + " to " + destinationPlatform);
             path = GameObject.FindGameObjectWithTag(currentPlatform + "-2").transform.Cast<Transform>().ToArray();
-            pathTraveller.FollowPath(path, delegate () { if (isServer) { currentPlatform = 2; } });
+            pathTraveller.FollowPath(path, delegate () {
+                if (isServer)
+                {
+                    currentPlatform = 2;
+                }
+                exerciseStateManager.activateExercise(2);
+            });
         }
         // Travel to 3
         if (currentPlatform != 3 && destinationPlatform == 3 && leapFlightGesture && viveFlightGesture)
         {
             print("Travelling from " + currentPlatform + " to " + destinationPlatform);
             path = GameObject.FindGameObjectWithTag(currentPlatform + "-3").transform.Cast<Transform>().ToArray();
-            pathTraveller.FollowPath(path, delegate () { if (isServer) { currentPlatform = 3; } });
+            pathTraveller.FollowPath(path, delegate () {
+                if (isServer)
+                {
+                    currentPlatform = 3;
+                }
+                exerciseStateManager.activateExercise(3);
+            });
         }
     }
 }
