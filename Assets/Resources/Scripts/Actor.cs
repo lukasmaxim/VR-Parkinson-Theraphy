@@ -49,6 +49,14 @@ public class Actor : NetworkBehaviour {
                 foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_DummyInput>()) {
                     go.localActor = this;
                 }
+                foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_LeapFlightGestureRecognizer>())
+                {
+                    go.localActor = this;
+                }
+                foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_ViveFlightGestureRecognizer>())
+                {
+                    go.localActor = this;
+                }
             }
             //*******************************
 
@@ -167,7 +175,7 @@ public class Actor : NetworkBehaviour {
 
     public void RequestSetBool(int key, bool value)
     {
-        print("Bool requested");
+        print("Bool requested (" + key + "): " + value);
         if (isLocalPlayer)
         {
             print("Was local player, forwarding...");
@@ -178,8 +186,25 @@ public class Actor : NetworkBehaviour {
     [Command]
     public void CmdSetBool(int key, bool value)
     {
-        print("Server Bool requested");
+        print("Server Bool requested (" + key + "): " + value);
         GameObject.FindObjectOfType<FP_NetworkedValueManager>().SetBool(key, value);
+    }
+
+    public void RequestSetInt(int key, int value)
+    {
+        print("Int requested (" + key + "): " + value);
+        if (isLocalPlayer)
+        {
+            print("Was local player, forwarding...");
+            CmdSetInt(key, value);
+        }
+    }
+
+    [Command]
+    public void CmdSetInt(int key, int value)
+    {
+        print("Server Int requested (" + key + "): " + value);
+        GameObject.FindObjectOfType<FP_NetworkedValueManager>().SetInt(key, value);
     }
 
    

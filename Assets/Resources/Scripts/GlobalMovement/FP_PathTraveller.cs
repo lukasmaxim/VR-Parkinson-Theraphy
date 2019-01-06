@@ -5,27 +5,40 @@ using UnityEngine;
 public class FP_PathTraveller : MonoBehaviour
 {
 
+    public delegate void TravelFinishedDelegate();
+
     public Transform[] path;
     public float speed;
 
     int currentNode;
     float timer;
 
-    bool shouldFollow = true;
+    bool isTravelling;
+    TravelFinishedDelegate callback;
 
-    public void FollowPath()
+    public void FollowPath(Transform[] path, TravelFinishedDelegate callback)
     {
+        if (isTravelling)
+        {
+            return;
+        }
+
+        this.path = path;
+        this.callback = callback;
         currentNode = 0;
         timer = 0;
-        shouldFollow = true;
-
+        isTravelling = true;
     }
 
     void checkNextNode()
     {
         if (currentNode == path.Length - 1)
         {
-            shouldFollow = false;
+            isTravelling = false;
+            if (this.callback != null)
+            {
+                this.callback();
+            }
         }
         else
         {
@@ -37,7 +50,7 @@ public class FP_PathTraveller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!shouldFollow)
+        if (!isTravelling)
         {
             return;
         }
