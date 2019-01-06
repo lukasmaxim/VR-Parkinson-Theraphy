@@ -46,6 +46,9 @@ public class Actor : NetworkBehaviour {
             {
                 // find objects that can be manipulated 
                 // assign this Actor to the localActor field of the AuthorityManager component of each shared object
+                foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_DummyInput>()) {
+                    go.localActor = this;
+                }
             }
             //*******************************
 
@@ -158,6 +161,29 @@ public class Actor : NetworkBehaviour {
     {
         newCharacter.AttachToActor(netId);
     }
+
+    // Various Network methods to communicate state changes
+    //*********************************************************
+
+    public void RequestSetBool(int key, bool value)
+    {
+        print("Bool requested");
+        if (isLocalPlayer)
+        {
+            print("Was local player, forwarding...");
+            CmdSetBool(key, value);
+        }
+    }
+
+    [Command]
+    public void CmdSetBool(int key, bool value)
+    {
+        print("Server Bool requested");
+        GameObject.FindObjectOfType<FP_NetworkedValueManager>().SetBool(key, value);
+    }
+
+   
+    //*********************************************************
 
 
     //this part is for object sharing

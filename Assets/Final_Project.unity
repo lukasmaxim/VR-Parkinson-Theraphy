@@ -654,7 +654,7 @@ MonoBehaviour:
   isNetworkActive: 0
   matchMaker: {fileID: 0}
   host: 0
-  server: 1
+  server: 0
 --- !u!4 &349219344
 Transform:
   m_ObjectHideFlags: 0
@@ -1184,6 +1184,86 @@ Transform:
   m_Father: {fileID: 1857947903}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &764912459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 764912461}
+  - component: {fileID: 764912462}
+  - component: {fileID: 764912460}
+  m_Layer: 0
+  m_Name: DummyInput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &764912460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 764912459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6f24c9dee1f13b41a12e14d3ea62e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localActor: {fileID: 0}
+  p12: {fileID: 187470058}
+  p21: {fileID: 1230107720}
+  p13: {fileID: 0}
+  p31: {fileID: 0}
+  p23: {fileID: 0}
+  p32: {fileID: 0}
+--- !u!4 &764912461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 764912459}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 29.571747, y: 1.6126993, z: -0.47666296}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &764912462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 764912459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &794918994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,13 +1398,13 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   Period: 0.1
   HandModel: {fileID: 946553036}
-  Thumb: 0
-  Index: 0
+  Thumb: 1
+  Index: 1
   Middle: 1
   Ring: 1
   Pinky: 1
-  MinimumExtendedCount: 2
-  MaximumExtendedCount: 2
+  MinimumExtendedCount: 0
+  MaximumExtendedCount: 0
   ShowGizmos: 1
 --- !u!114 &946553036 stripped
 MonoBehaviour:
@@ -1659,6 +1739,79 @@ Transform:
   m_Father: {fileID: 1877101374}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1358625436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1358625439}
+  - component: {fileID: 1358625438}
+  - component: {fileID: 1358625437}
+  m_Layer: 0
+  m_Name: NetworkedValueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1358625437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1358625436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &1358625438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1358625436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9ec554ba0154ec4cbf4236d262989cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1358625439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1358625436}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 29.571747, y: 1.6126993, z: -0.47666296}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1412777761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1898,13 +2051,13 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   Period: 0.1
   HandModel: {fileID: 1498710409}
-  Thumb: 0
-  Index: 0
+  Thumb: 1
+  Index: 1
   Middle: 1
   Ring: 1
   Pinky: 1
-  MinimumExtendedCount: 2
-  MaximumExtendedCount: 2
+  MinimumExtendedCount: 0
+  MaximumExtendedCount: 0
   ShowGizmos: 1
 --- !u!114 &1498710409 stripped
 MonoBehaviour:

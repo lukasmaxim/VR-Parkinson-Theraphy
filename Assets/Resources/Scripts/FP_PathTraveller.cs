@@ -11,7 +11,7 @@ public class FP_PathTraveller : MonoBehaviour
     int currentNode;
     float timer;
 
-    bool shouldFollow;
+    bool shouldFollow = true;
 
     public void FollowPath()
     {
