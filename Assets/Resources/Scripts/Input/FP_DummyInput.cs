@@ -17,5 +17,10 @@ public class FP_DummyInput : FP_NetworkedObject {
         {
             localActor.RequestSetBool(0x00, true);
         }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            localActor.RequestSpawnPrefabForMe("ExerciseBall", this.transform.position);
+        }
 	}
 }

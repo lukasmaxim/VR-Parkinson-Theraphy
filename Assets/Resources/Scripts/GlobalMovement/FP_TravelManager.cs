@@ -35,7 +35,7 @@ public class FP_TravelManager : NetworkBehaviour {
 
     // Update is called once per frame
     void Update () {
-        print("curr: " + currentPlatform + "; dest: " + destinationPlatform + "; leap: " + leapFlightGesture + "; vive: " + viveFlightGesture);
+        //print("curr: " + currentPlatform + "; dest: " + destinationPlatform + "; leap: " + leapFlightGesture + "; vive: " + viveFlightGesture);
         // Travel to 1
         if (currentPlatform != 1 && destinationPlatform == 1 && leapFlightGesture && viveFlightGesture)
         {

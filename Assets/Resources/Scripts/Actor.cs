@@ -57,6 +57,10 @@ public class Actor : NetworkBehaviour {
                 {
                     go.localActor = this;
                 }
+                foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_BallSpawner>())
+                {
+                    go.localActor = this;
+                }
             }
             //*******************************
 
@@ -207,7 +211,36 @@ public class Actor : NetworkBehaviour {
         GameObject.FindObjectOfType<FP_NetworkedValueManager>().SetInt(key, value);
     }
 
-   
+    public void RequestSpawnPrefabForMe(string prefabName, Vector3 position)
+    {
+        print("SpawnForMe requested (" + prefabName + ")");
+        if (isLocalPlayer)
+        {
+            print("Was local player, forwarding...");
+            CmdSpawnPrefabForMe(this.GetComponent<NetworkIdentity>(), prefabName, position);
+        }
+    }
+
+    [Command]
+    public void CmdSpawnPrefabForMe(NetworkIdentity netID, string prefabName, Vector3 position)
+    {
+        print("Server SpawnForMe requested (" + prefabName + ")");
+        GameObject instance = Instantiate(Resources.Load("Prefabs/"+prefabName, typeof(GameObject))) as GameObject;
+        instance.transform.position = position;
+        NetworkServer.SpawnWithClientAuthority(instance, netID.connectionToClient);
+
+        TargetNotifyClientOfSpawn(netID.connectionToClient, instance);
+    }
+
+    // Returns the GO to where it belongs
+    [TargetRpc]
+    void TargetNotifyClientOfSpawn(NetworkConnection connection, GameObject go)
+    {
+        GameObject ball = go;
+        print("Ball: " + ball);
+        GameObject.FindObjectOfType<FP_BallSpawner>().ball = ball;
+    }
+
     //*********************************************************
 
 
