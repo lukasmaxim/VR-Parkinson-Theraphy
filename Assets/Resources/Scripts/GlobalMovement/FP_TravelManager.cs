@@ -41,6 +41,7 @@ public class FP_TravelManager : NetworkBehaviour {
         {
             print("Travelling from " + currentPlatform + " to " + destinationPlatform);
             path = GameObject.FindGameObjectWithTag(currentPlatform + "-1").transform.Cast<Transform>().ToArray();
+            exerciseStateManager.deactivateExercises();
             pathTraveller.FollowPath(path, delegate () {
                 if (isServer) {
                     currentPlatform = 1;
@@ -53,6 +54,7 @@ public class FP_TravelManager : NetworkBehaviour {
         {
             print("Travelling from " + currentPlatform + " to " + destinationPlatform);
             path = GameObject.FindGameObjectWithTag(currentPlatform + "-2").transform.Cast<Transform>().ToArray();
+            exerciseStateManager.deactivateExercises();
             pathTraveller.FollowPath(path, delegate () {
                 if (isServer)
                 {
@@ -66,6 +68,7 @@ public class FP_TravelManager : NetworkBehaviour {
         {
             print("Travelling from " + currentPlatform + " to " + destinationPlatform);
             path = GameObject.FindGameObjectWithTag(currentPlatform + "-3").transform.Cast<Transform>().ToArray();
+            exerciseStateManager.deactivateExercises();
             pathTraveller.FollowPath(path, delegate () {
                 if (isServer)
                 {

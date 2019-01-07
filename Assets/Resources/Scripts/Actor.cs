@@ -65,6 +65,10 @@ public class Actor : NetworkBehaviour {
                 {
                     go.localActor = this;
                 }
+                foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_WireSpawner>())
+                {
+                    go.localActor = this;
+                }
             }
             //*******************************
 
@@ -243,6 +247,66 @@ public class Actor : NetworkBehaviour {
         GameObject ball = go;
         print("Ball: " + ball);
         GameObject.FindObjectOfType<FP_BallSpawner>().ball = ball;
+    }
+
+
+    public void RequestSpawnWireSegment(Vector3 position, Vector3 lastPosition, bool firstSegment)
+    {
+        CmdSpawnWireSegment(position, lastPosition, firstSegment);
+    }
+
+    [Command]
+    public void CmdSpawnWireSegment(Vector3 position, Vector3 lastPosition, bool firstSegment)
+    {
+        GameObject sphere = Instantiate(Resources.Load("Prefabs/Exercise2Sphere", typeof(GameObject))) as GameObject;
+        // position
+        sphere.transform.position = position;
+        // assign tag
+        sphere.tag = "Wire";
+
+        NetworkServer.Spawn(sphere);
+
+        // if there is already a sphere spawned, connect the previous one with this one through a cylinder
+        if (!firstSegment)
+        {
+            GameObject cylinder = Instantiate(Resources.Load("Prefabs/Exercise2Cylinder", typeof(GameObject))) as GameObject;
+            // position
+            cylinder.transform.position = (position - lastPosition) / 2.0f + lastPosition;
+            // assign tag
+            cylinder.tag = "Wire";
+            // scale
+            var v3T = cylinder.transform.localScale;
+            v3T.y = (position - lastPosition).magnitude * 0.5f;
+            cylinder.transform.localScale = v3T;
+            // rotate
+            cylinder.transform.rotation = Quaternion.FromToRotation(Vector3.up, position - lastPosition);
+
+            NetworkServer.Spawn(cylinder);
+            RpcScaleWireSegment(cylinder, v3T);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcScaleWireSegment(GameObject go, Vector3 scale)
+    {
+        go.transform.localScale = scale;
+    }
+
+    public void RequestRemoveWire()
+    {
+        print("actor: request removal");
+        CmdRemoveWire();
+    }
+
+    [Command]
+    public void CmdRemoveWire()
+    {
+        print("Command removal");
+        foreach(GameObject go in GameObject.FindGameObjectsWithTag("Wire"))
+        {
+            print("for each... ");
+            NetworkServer.Destroy(go);
+        }
     }
 
     //*********************************************************

@@ -13,6 +13,8 @@ public class FP_ExerciseStateManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		scripts = new MonoBehaviour[][]{ exercise1, exercise2, exercise3 };
+        deactivateExercises();
+        activateExercise(1);
 	}
 	
 	// Update is called once per frame
@@ -24,16 +26,20 @@ public class FP_ExerciseStateManager : MonoBehaviour {
     public void activateExercise(int exerciseNumber)
     {
         print("activateExercise entered. " + exerciseNumber);
-        foreach(MonoBehaviour[] mba in scripts)
-        {
-            foreach(MonoBehaviour mb in mba)
-            {
-                mb.enabled = false;
-            }
-        }
 
         foreach(MonoBehaviour mb in scripts[exerciseNumber - 1]){
             mb.enabled = true;
+        }
+    }
+
+    public void deactivateExercises()
+    {
+        foreach (MonoBehaviour[] mba in scripts)
+        {
+            foreach (MonoBehaviour mb in mba)
+            {
+                mb.enabled = false;
+            }
         }
     }
 }
