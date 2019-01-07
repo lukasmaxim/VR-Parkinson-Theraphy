@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 54053330755309996}
   - component: {fileID: 114412031368452826}
   - component: {fileID: 114218087687523032}
+  - component: {fileID: 114512120901163360}
   m_Layer: 0
   m_Name: ExerciseBall
   m_TagString: Untagged
@@ -135,6 +136,18 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114512120901163360
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1005128128145986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c637b3782453e4a811b4225ffdb1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localActor: {fileID: 0}
 --- !u!114 &114527457464253728
 MonoBehaviour:
   m_ObjectHideFlags: 1

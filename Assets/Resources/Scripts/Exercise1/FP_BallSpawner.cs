@@ -3,6 +3,7 @@ using Leap.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 enum PinchState
 {
@@ -84,6 +85,8 @@ public class FP_BallSpawner : FP_NetworkedObject {
         Vector3 force = (leftHand.PalmVelocity.ToVector3() + rightHand.PalmVelocity.ToVector3());
         force = force / 4;
         rb.AddForce(force, ForceMode.Impulse);
+
+        localActor.ReturnObjectAuthority(ball.GetComponent<NetworkIdentity>());
 
         activeBallPresent = false;
         ball = null;

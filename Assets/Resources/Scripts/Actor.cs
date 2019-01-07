@@ -46,6 +46,10 @@ public class Actor : NetworkBehaviour {
             {
                 // find objects that can be manipulated 
                 // assign this Actor to the localActor field of the AuthorityManager component of each shared object
+                foreach (AuthorityManager go in GameObject.FindObjectsOfType<AuthorityManager>())
+                {
+                    go.localActor = this;
+                }
                 foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_DummyInput>()) {
                     go.localActor = this;
                 }
@@ -252,14 +256,22 @@ public class Actor : NetworkBehaviour {
     // ask the server for the authority over an object with NetworkIdentity netID
     public void RequestObjectAuthority(NetworkIdentity netID)
     {
-        
+        if (!isLocalPlayer)
+            return;
+
+        print("Requesting authority for " + netID);
+        CmdAssignObjectAuthorityToClient(netID);
     }
 
     // should only be run on localPlayer (by the AuthorityManager of a shared object)
     // ask the server to remove the authority over an object with NetworkIdentity netID
     public void ReturnObjectAuthority(NetworkIdentity netID)
     {
-           
+        if (!isLocalPlayer)
+            return;
+
+        print("Returning authority for " + netID);
+        CmdRemoveObjectAuthorityFromClient(netID);
     }
 
     // run on the server
@@ -267,7 +279,7 @@ public class Actor : NetworkBehaviour {
     [Command]
     void CmdAssignObjectAuthorityToClient(NetworkIdentity netID)
     {
-       
+        netID.GetComponent<AuthorityManager>().AssignClientAuthority(connectionToClient);
     }
 
     // run on the server
@@ -275,7 +287,7 @@ public class Actor : NetworkBehaviour {
     [Command]
     void CmdRemoveObjectAuthorityFromClient(NetworkIdentity netID)
     {
-       
+        netID.GetComponent<AuthorityManager>().RemoveClientAuthority(connectionToClient);
     }
     //*******************************
 }
