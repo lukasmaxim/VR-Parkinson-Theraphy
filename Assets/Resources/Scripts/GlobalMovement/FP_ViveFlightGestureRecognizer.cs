@@ -18,6 +18,10 @@ public class FP_ViveFlightGestureRecognizer : FP_NetworkedObject
     // Buffer for the activations from our gesture
     int activationsBuffer;
 
+    // Indicates gesture
+    bool gesture;
+    bool lastGesture;
+
     // Use this for initialization
     void Start() {
         leftTriggerState = CatcherTriggerState.NonPressing;
@@ -34,7 +38,17 @@ public class FP_ViveFlightGestureRecognizer : FP_NetworkedObject
     void FixedUpdate()
     {
         RegisterActivations();
-        //print(IsConsideredGesture()); DEBUG
+
+        gesture = IsConsideredGesture();
+        if (gesture != lastGesture)
+        {
+            // If gesture changed from last update, we send the change to the server
+            if (localActor != null)
+            {
+                localActor.RequestSetBool(FP_NetworkCodes.B_VIVE_FLIGHT_GESTURE, gesture);
+            }
+        }
+        lastGesture = gesture;
     }
 
     // If the activationsBuffer is higher than 5, we consider the activations enough to count as our transport gesture

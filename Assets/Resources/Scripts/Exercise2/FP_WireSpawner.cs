@@ -41,7 +41,7 @@ public class FP_WireSpawner : FP_NetworkedObject {
     {
         if (spawnGestureActive)
         {
-            print("Gesture Active");
+            //print("Gesture Active");
             spawnTimer += Time.deltaTime;
 
             if (spawnTimer > 0.1f)
@@ -64,7 +64,7 @@ public class FP_WireSpawner : FP_NetworkedObject {
 
             if(deleteTimer > 2)
             {
-                print("Requesting removal");
+                //print("Requesting removal");
                 localActor.RequestRemoveWire();
                 deleteTimer = 0;
             }

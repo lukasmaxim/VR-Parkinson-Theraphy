@@ -82,9 +82,13 @@ public class FP_BallSpawner : FP_NetworkedObject {
 
         Rigidbody rb = ball.GetComponent<Rigidbody>();
 
-        Vector3 force = (leftHand.PalmVelocity.ToVector3() + rightHand.PalmVelocity.ToVector3());
-        force = force / 4;
-        rb.AddForce(force, ForceMode.Impulse);
+        Vector3 force = (leftHand.PalmVelocity.ToVector3() + rightHand.PalmVelocity.ToVector3()).normalized;
+        force = force * (rightHand.PalmVelocity.ToVector3() + leftHand.PalmVelocity.ToVector3()).magnitude * 0.8f;
+        //print("Force: " + force);
+        //rb.AddForce(force, ForceMode.Impulse);
+        //rb.velocity = force;
+        ball.GetComponent<FP_NetworkedPropertySync>().SetVelocity(force);
+
 
         localActor.ReturnObjectAuthority(ball.GetComponent<NetworkIdentity>());
 

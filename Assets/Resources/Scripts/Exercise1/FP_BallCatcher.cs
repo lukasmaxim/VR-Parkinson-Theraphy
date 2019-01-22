@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using Valve.VR;
 
 public enum CatcherTriggerState
@@ -11,6 +12,8 @@ public enum CatcherTriggerState
 
 public class FP_BallCatcher : MonoBehaviour {
 
+    // Proxy object to handle network interaction
+    [SerializeField] FP_BallCatcherProxy ballCatcherProxy;
     // Controllers and TriggerStates
     [SerializeField] SteamVR_Behaviour_Pose controller;
     CatcherTriggerState triggerState;
@@ -37,10 +40,15 @@ public class FP_BallCatcher : MonoBehaviour {
         {
             if (triggerState == CatcherTriggerState.Pressing && joint.connectedBody == null)
             {
+                //print("Ball grabbed");
+                ballCatcherProxy.OnBallGrabbed(objectToCatch);
                 joint.connectedBody = objectToCatch.GetComponent<Rigidbody>();
             }
             else if (triggerState == CatcherTriggerState.NonPressing && joint.connectedBody != null)
             {
+                //print("Ball dropped");
+                objectToCatch.GetComponent<FP_NetworkedPropertySync>().RequestSetGravity(true);
+                ballCatcherProxy.OnBallDropped(objectToCatch);
                 joint.connectedBody = null;
             }
         }
@@ -50,9 +58,11 @@ public class FP_BallCatcher : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+
         // If it's a ball that's intersecting with our controller, we declare it the objectToCatch
         if (other.gameObject.tag == "Ball")
         {
+            //print("OnTriggerEnter!");
             objectToCatch = other.gameObject;
         }
     }
@@ -60,18 +70,24 @@ public class FP_BallCatcher : MonoBehaviour {
     // Triggered if the controller leaves collision area of some collider
     void OnTriggerExit(Collider other)
     {
-        objectToCatch = null;
+        if (other.gameObject.tag == "Ball")
+        {
+            //print("OnTriggerExit!");
+            objectToCatch = null;
+        }
     }
 
     // Called if trigger is pressed
     public void TriggerDown()
     {
+        //print("TriggerDown");
         triggerState = CatcherTriggerState.Pressing;
     }
 
     // Called if trigger is released
     public void TriggerUp()
     {
+        //print("TriggerUp!");
         triggerState = CatcherTriggerState.NonPressing;
     }
 }

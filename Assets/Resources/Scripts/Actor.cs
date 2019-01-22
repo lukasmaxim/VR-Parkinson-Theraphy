@@ -65,7 +65,15 @@ public class Actor : NetworkBehaviour {
                 {
                     go.localActor = this;
                 }
+                foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_BallCatcherProxy>())
+                {
+                    go.localActor = this;
+                }
                 foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_WireSpawner>())
+                {
+                    go.localActor = this;
+                }
+                foreach (FP_NetworkedObject go in GameObject.FindObjectsOfType<FP_WireTracerProxy>())
                 {
                     go.localActor = this;
                 }
@@ -187,10 +195,10 @@ public class Actor : NetworkBehaviour {
 
     public void RequestSetBool(int key, bool value)
     {
-        print("Bool requested (" + key + "): " + value);
+        //print("Bool requested (" + key + "): " + value);
         if (isLocalPlayer)
         {
-            print("Was local player, forwarding...");
+            //print("Was local player, forwarding...");
             CmdSetBool(key, value);
         }
     }
@@ -198,16 +206,16 @@ public class Actor : NetworkBehaviour {
     [Command]
     public void CmdSetBool(int key, bool value)
     {
-        print("Server Bool requested (" + key + "): " + value);
+        //print("Server Bool requested (" + key + "): " + value);
         GameObject.FindObjectOfType<FP_NetworkedValueManager>().SetBool(key, value);
     }
 
     public void RequestSetInt(int key, int value)
     {
-        print("Int requested (" + key + "): " + value);
+        //print("Int requested (" + key + "): " + value);
         if (isLocalPlayer)
         {
-            print("Was local player, forwarding...");
+            //print("Was local player, forwarding...");
             CmdSetInt(key, value);
         }
     }
@@ -215,16 +223,16 @@ public class Actor : NetworkBehaviour {
     [Command]
     public void CmdSetInt(int key, int value)
     {
-        print("Server Int requested (" + key + "): " + value);
+        //print("Server Int requested (" + key + "): " + value);
         GameObject.FindObjectOfType<FP_NetworkedValueManager>().SetInt(key, value);
     }
 
     public void RequestSpawnPrefabForMe(string prefabName, Vector3 position)
     {
-        print("SpawnForMe requested (" + prefabName + ")");
+        //print("SpawnForMe requested (" + prefabName + ")");
         if (isLocalPlayer)
         {
-            print("Was local player, forwarding...");
+            //print("Was local player, forwarding...");
             CmdSpawnPrefabForMe(this.GetComponent<NetworkIdentity>(), prefabName, position);
         }
     }
@@ -232,9 +240,10 @@ public class Actor : NetworkBehaviour {
     [Command]
     public void CmdSpawnPrefabForMe(NetworkIdentity netID, string prefabName, Vector3 position)
     {
-        print("Server SpawnForMe requested (" + prefabName + ")");
+        //print("Server SpawnForMe requested (" + prefabName + ")");
         GameObject instance = Instantiate(Resources.Load("Prefabs/"+prefabName, typeof(GameObject))) as GameObject;
         instance.transform.position = position;
+        instance.tag = "Ball";
         NetworkServer.SpawnWithClientAuthority(instance, netID.connectionToClient);
 
         TargetNotifyClientOfSpawn(netID.connectionToClient, instance);
@@ -245,7 +254,8 @@ public class Actor : NetworkBehaviour {
     void TargetNotifyClientOfSpawn(NetworkConnection connection, GameObject go)
     {
         GameObject ball = go;
-        print("Ball: " + ball);
+        ball.tag = "Ball";
+        //print("Ball: " + ball);
         GameObject.FindObjectOfType<FP_BallSpawner>().ball = ball;
     }
 
@@ -261,10 +271,12 @@ public class Actor : NetworkBehaviour {
         GameObject sphere = Instantiate(Resources.Load("Prefabs/Exercise2Sphere", typeof(GameObject))) as GameObject;
         // position
         sphere.transform.position = position;
+        sphere.AddComponent<SphereCollider>();
         // assign tag
         sphere.tag = "Wire";
 
         NetworkServer.Spawn(sphere);
+        RpcTagWire(sphere);
 
         // if there is already a sphere spawned, connect the previous one with this one through a cylinder
         if (!firstSegment)
@@ -272,6 +284,7 @@ public class Actor : NetworkBehaviour {
             GameObject cylinder = Instantiate(Resources.Load("Prefabs/Exercise2Cylinder", typeof(GameObject))) as GameObject;
             // position
             cylinder.transform.position = (position - lastPosition) / 2.0f + lastPosition;
+            cylinder.AddComponent<CapsuleCollider>();
             // assign tag
             cylinder.tag = "Wire";
             // scale
@@ -283,7 +296,14 @@ public class Actor : NetworkBehaviour {
 
             NetworkServer.Spawn(cylinder);
             RpcScaleWireSegment(cylinder, v3T);
+            RpcTagWire(cylinder);
         }
+    }
+
+    [ClientRpc]
+    public void RpcTagWire(GameObject go)
+    {
+        go.tag = "Wire";
     }
 
     [ClientRpc]
@@ -306,6 +326,34 @@ public class Actor : NetworkBehaviour {
         {
             print("for each... ");
             NetworkServer.Destroy(go);
+        }
+    }
+
+    public void RequestChangeMaterial(string materialName)
+    {
+        CmdChangeMaterial(materialName);
+    }
+
+    [Command]
+    public void CmdChangeMaterial(string materialName)
+    {
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Wire"))
+        {
+            Renderer renderer = go.GetComponent<Renderer>();
+            Material material = (Material)Resources.Load("Materials/" + materialName, typeof(Material));
+            renderer.material = material;
+        } 
+        RpcChangeMaterial(materialName);
+    }
+
+    [ClientRpc]
+    public void RpcChangeMaterial(string materialName)
+    {
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Wire"))
+        {
+            Renderer renderer = go.GetComponent<Renderer>();
+            Material material = (Material)Resources.Load("Materials/" + materialName, typeof(Material));
+            renderer.material = material;
         }
     }
 

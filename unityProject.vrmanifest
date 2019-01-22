@@ -2,12 +2,12 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.task3copy.exe",
+      "app_key": "application.generated.unity.task3.exe",
       "launch_type": "url",
       "url": "steam://launch/",
       "strings": {
         "en_us": {
-          "name": "Task3 - Copy [Testing]"
+          "name": "Task3 [Testing]"
         }
       }
     }

@@ -115,7 +115,6 @@ public class FP_LeapFlightGestureRecognizer : FP_NetworkedObject
         {
             localActor.RequestSetInt(FP_NetworkCodes.I_LEAP_FLIGHT_DESTINATION, destinationPlatform);
         }
-        print(destinationPlatform);
     }
 
     // Called if 2 fingers are extended
@@ -126,7 +125,6 @@ public class FP_LeapFlightGestureRecognizer : FP_NetworkedObject
         {
             localActor.RequestSetInt(FP_NetworkCodes.I_LEAP_FLIGHT_DESTINATION, destinationPlatform);
         }
-        print(destinationPlatform);
     }
 
     // Called if 3 fingers are extended
@@ -137,6 +135,5 @@ public class FP_LeapFlightGestureRecognizer : FP_NetworkedObject
         {
             localActor.RequestSetInt(FP_NetworkCodes.I_LEAP_FLIGHT_DESTINATION, destinationPlatform);
         }
-        print(destinationPlatform);
     }
 }

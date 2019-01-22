@@ -45,13 +45,13 @@ public class FP_LeapNavigation : MonoBehaviour {
     // If only the left hand does the movement pose, rotate self to the left
     void updateLeftRotation()
     {
-        this.transform.RotateAround(this.transform.position, Vector3.up, -speed * 50 * Time.deltaTime);
+        this.transform.RotateAround(this.transform.position, Vector3.up, -speed * 20 * Time.deltaTime);
     }
 
     // If only the right hand does the movement pose, rotate self to the right
     void updateRightRotation()
     {
-        this.transform.RotateAround(this.transform.position, Vector3.up, speed * 50 * Time.deltaTime);
+        this.transform.RotateAround(this.transform.position, Vector3.up, speed * 20 * Time.deltaTime);
     }
 
     // If both hands to the movement pose, allow free movement in the direction of the index finger
