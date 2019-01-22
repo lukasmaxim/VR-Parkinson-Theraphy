@@ -10,7 +10,7 @@ The current exercises include the following:
 The Leap player, i.e. the therapist, creates and transforms balls using a pinch gesture. If they feel the size is appropriate to the patients 
 current motor skills, they throw the ball towards the patient, whose aim is to catch it in mid-air.
 
-![title](https://github.com/lukasmaxim/VR-Parkinson-Therapy/tree/master/screenshots/ball_game_screenshot.PNG)
+![alt text](https://github.com/lukasmaxim/VR-Parkinson-Therapy/tree/master/screenshots/ball_game_screenshot.png)
 
 When a ball is created and thrown, gravity is currently off to make it easier for the patient to actually catch the ball. Once one of the controllers
 intersects and the Vive player presses the trigger, gravity is activated and the ball can be placed in the crate located on the patient's right side.
@@ -20,7 +20,7 @@ intersects and the Vive player presses the trigger, gravity is activated and the
 Here, the Leap player creates a wire that has to be traced by the patient, using a rod with an attached ring. If the ring touches the
 wire, its material is being changed to signal that there was an intersection
 
-![title](https://github.com/lukasmaxim/VR-Parkinson-Therapy/tree/master/screenshots/wire_tracer_screenshot.PNG)
+![title](https://github.com/lukasmaxim/VR-Parkinson-Therapy/tree/master/screenshots/wire_tracer_screenshot.png)
 
 The Leap player's gesture for creating the wire is to extend only the right index finger, whereupon a wire is spawned according to the
 current position of the finger. To stop wire creation, no finger on the right hand may be extended. For deletion, the left thumb, index and middle finger
