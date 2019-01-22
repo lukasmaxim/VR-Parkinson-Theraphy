@@ -10,7 +10,7 @@ The current exercises include the following:
 The Leap player, i.e. the therapist, creates and transforms balls using a pinch gesture. If they feel the size is appropriate to the patients 
 current motor skills, they throw the ball towards the patient, whose aim is to catch it in mid-air.
 
-![ball_game_screenshot](https://github.com/lukasmaxim/VR-Parkinson-Therapy/tree/master/screenshots/ball_game_screenshot.PNG)
+![Uploading ball_game_screenshot.PNG…](https://github.com/lukasmaxim/VR-Parkinson-Therapy/tree/master/screenshots/ball_game_screenshot.PNG)
 
 When a ball is created and thrown, gravity is currently off to make it easier for the patient to actually catch the ball. Once one of the controllers
 intersects and the Vive player presses the trigger, gravity is activated and the ball can be placed in the crate located on the patient's right side.
